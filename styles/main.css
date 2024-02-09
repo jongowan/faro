@@ -1,0 +1,43 @@
+#main-description {
+    color: blue;
+}
+
+#card-table {
+    background-color: black;
+    height: 75vh;
+    width: 100%;
+}
+
+#card-section {
+    background-color: green;
+    min-height: 50vh;
+    min-width: 50vw;
+}
+
+.vp-wide #card-section {
+    width: 66%;
+    height: 100%;
+    float: left;
+}
+
+.vp-tall #card-section {
+    width: 100%;
+    height: 60%;
+}
+
+#dealer-section {
+    background-color: lightgreen;
+    min-height: 25vh;
+    min-width: 25vw;
+}
+
+.vp-wide #dealer-section {
+    width: 33%;
+    height: 100%;
+    float: left;
+}
+
+.vp-tall #dealer-section {
+    width: 100%;
+    height: 25%;
+}
