@@ -12,6 +12,8 @@
     background-color: green;
     min-height: 50vh;
     min-width: 50vw;
+    display: flex;
+    align-items: center;
 }
 
 .vp-wide #card-section {
@@ -40,4 +42,28 @@
 .vp-tall #dealer-section {
     width: 100%;
     height: 25%;
+}
+
+.playing-card {
+    float: right;
+    padding: 1%;
+    max-width: var(--card-max-width);
+    max-height: var(--card-max-height);
+}
+
+#card-spades-7 {
+    float: left;
+}
+
+#left-card-section {
+    width: 85%;
+    float: left;
+}
+
+#right-card-section {
+    width: 14%;
+    height: 100%;
+    float: left;
+    display: flex;
+    align-items: center;
 }
