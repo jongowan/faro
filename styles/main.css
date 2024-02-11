@@ -163,3 +163,19 @@
 .player-4-color {
     color: var(--player-4-color);
 }
+
+.player-1-active {
+    border: 5px solid var(--player-1-color);
+}
+
+.player-2-active {
+    border: 5px solid var(--player-2-color);
+}
+
+.player-3-active {
+    border: 5px solid var(--player-3-color);
+}
+
+.player-4-active {
+    border: 5px solid var(--player-4-color);
+}

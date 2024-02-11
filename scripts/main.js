@@ -1,3 +1,5 @@
+let activePlayer = 'player-1'
+
 window.onresize = function () {
     const cardTable = document.getElementById('card-table')
     const cardSection = document.getElementById('card-section')
@@ -118,4 +120,46 @@ function loadChipSVG(playerId) {
         .catch(error => {
             console.error('Error fetching SVG:', error);
         });
+}
+
+function changeActivePlayer(playerId) {
+    const oldActivePlayerSection = document.getElementById(activePlayer)
+    oldActivePlayerSection.classList.remove(activePlayer + '-active')
+
+    const newActivePlayerSection = document.getElementById(playerId)
+    newActivePlayerSection.classList.add(playerId + '-active')
+
+    activePlayer = playerId
+}
+
+const betsByCard = {}
+for (const cardId of [
+    'card-spades-ace',
+    'card-spades-2',
+    'card-spades-3',
+    'card-spades-4',
+    'card-spades-5',
+    'card-spades-6',
+    'card-spades-7',
+    'card-spades-8',
+    'card-spades-9',
+    'card-spades-10',
+    'card-spades-jack',
+    'card-spades-queen',
+    'card-spades-king',
+]) {
+    betsByCard[cardId] = {
+        'player-1': {count: 0, coppered: false},
+        'player-2': {count: 0, coppered: false},
+        'player-3': {count: 0, coppered: false},
+        'player-4': {count: 0, coppered: false}
+    }
+}
+
+function betOnCard(cardId) {
+    betsByCard[cardId][activePlayer].count += 1
+}
+
+function toggleCopperBetOnCard(cardId) {
+    betsByCard[cardId][activePlayer].coppered = !betsByCard[cardId][activePlayer].coppered
 }

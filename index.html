@@ -47,6 +47,8 @@
 
         <div id="dealer-section">
             <div id="card-deck-section">
+                <h1 id="high-low-label" class="next-to-card-text">HL</h1>
+                <img src="./images/cards/other/blank_card.svg" class="playing-card" id="high-low-card" alt="high-low-card">
                 <img src="./images/cards/backs/red.svg" class="playing-card" id="card-back" alt="card-deck">
                 <h1 id="deck-counter" class="next-to-card-text">52</h1>
             </div>
@@ -61,28 +63,28 @@
     </div>
 
     <div id="player-section">
-        <span id="player-1" class="player">
+        <span id="player-1" class="player player-1-active" onclick="changeActivePlayer('player-1')">
             <img src="./images/chips/poker-chip-svgrepo-com.svg" class="chip player-1-color" id="player-1-main-chip" alt="chip">
             <span>
                 <h1 class="next-to-card-text player-1-color">P1</h1>
                 <h2 class="next-to-card-text player-1-color" id="player-1-score">50</h2>
             </span>
         </span>
-        <span id="player-2" class="player">
+        <span id="player-2" class="player" onclick="changeActivePlayer('player-2')">
             <img src="./images/chips/poker-chip-svgrepo-com.svg" class="chip player-2-color" id="player-2-main-chip" alt="chip">
             <span>
                 <h1 class="next-to-card-text player-2-color">P2</h1>
                 <h2 class="next-to-card-text player-2-color" id="player-2-score">50</h2>
             </span>
         </span>
-        <span id="player-3" class="player">
+        <span id="player-3" class="player" onclick="changeActivePlayer('player-3')">
             <img src="./images/chips/poker-chip-svgrepo-com.svg" class="chip player-3-color" id="player-3-main-chip" alt="chip">
             <span>
                 <h1 class="next-to-card-text player-3-color">P3</h1>
                 <h2 class="next-to-card-text player-3-color" id="player-3-score">50</h2>
             </span>
         </span>
-        <span id="player-4" class="player">
+        <span id="player-4" class="player" onclick="changeActivePlayer('player-4')">
             <img src="./images/chips/poker-chip-svgrepo-com.svg" class="chip player-4-color" id="player-4-main-chip" alt="chip">
             <span>
                 <h1 class="next-to-card-text player-4-color">P4</h1>
