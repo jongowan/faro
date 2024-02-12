@@ -29,6 +29,9 @@ window.onresize = function () {
     rootStyle.setProperty('--player-2-color', 'darkred')
     rootStyle.setProperty('--player-3-color', 'darkgreen')
     rootStyle.setProperty('--player-4-color', 'darkorange')
+
+    const activeChip = document.getElementById(activePlayer + '-main-chip')
+    rootStyle.setProperty('--small-chip-width', (activeChip.clientWidth / 2) + 'px')
 }
 
 window.onload = function () {
@@ -132,8 +135,7 @@ function changeActivePlayer(playerId) {
     activePlayer = playerId
 }
 
-const betsByCard = {}
-for (const cardId of [
+const allCardIds = [
     'card-spades-ace',
     'card-spades-2',
     'card-spades-3',
@@ -147,7 +149,9 @@ for (const cardId of [
     'card-spades-jack',
     'card-spades-queen',
     'card-spades-king',
-]) {
+]
+const betsByCard = {}
+for (const cardId of allCardIds) {
     betsByCard[cardId] = {
         'player-1': {count: 0, coppered: false},
         'player-2': {count: 0, coppered: false},
@@ -156,9 +160,80 @@ for (const cardId of [
     }
 }
 
+function getSmallChip() {
+    const chipTag = document.getElementById(activePlayer + '-main-chip').cloneNode(true);
+    chipTag.classList.remove('chip')
+    chipTag.classList.add('small-chip')
+    chipTag.removeAttribute('id')
+    return chipTag
+}
+
+function positionSmallChipOnCard(cardId) {
+    const cardContainer = document.getElementById('container-' + cardId)
+    const smallChip = getSmallChip()
+    smallChip.setAttribute('id', 'chip-' + cardId + '-' + activePlayer)
+    const smallChipWidth = document.querySelector(':root').style.getPropertyValue('--small-chip-width')
+
+    if (activePlayer == 'player-1') {
+        smallChip.style.setProperty('left', '0px')
+        smallChip.style.setProperty('bottom', smallChipWidth)
+    }
+    else if (activePlayer == 'player-2') {
+        smallChip.style.setProperty('right', '0px')
+        smallChip.style.setProperty('bottom', smallChipWidth)
+    }
+    else if (activePlayer == 'player-3') {
+        smallChip.style.setProperty('left', '0px')
+        smallChip.style.setProperty('bottom', '0px')
+    }
+    else if (activePlayer == 'player-4') {
+        smallChip.style.setProperty('right', '0px')
+        smallChip.style.setProperty('bottom', '0px')
+    }
+
+    cardContainer.innerHTML += smallChip.outerHTML
+}
+
 function betOnCard(cardId) {
     betsByCard[cardId][activePlayer].count += 1
+
+    let smallChip = document.getElementById('chip-' + cardId + '-' + activePlayer)
+    if (!(smallChip)) {
+        positionSmallChipOnCard(cardId)
+        smallChip = document.getElementById('chip-' + cardId + '-' + activePlayer)
+    }
+    
+    smallChip.setAttribute('title', betsByCard[cardId][activePlayer].count)
 }
+
+function decBetOnCard(cardId) {
+    const activeBet = betsByCard[cardId][activePlayer]
+
+    if (activeBet.count == 0) {
+        return
+    }
+
+    let smallChip = document.getElementById('chip-' + cardId + '-' + activePlayer)
+
+    smallChip.setAttribute('title', --activeBet.count)
+
+    if (activeBet.count == 0) {
+        smallChip.remove()
+    }
+}
+
+document.addEventListener('click', (event) => {
+    for (const cardId of allCardIds) {
+        if (cardId == event.target.id) {
+            if (event.shiftKey) {
+                decBetOnCard(cardId)
+            }
+            else {
+                betOnCard(cardId)
+            }
+        }
+    }
+})
 
 function toggleCopperBetOnCard(cardId) {
     betsByCard[cardId][activePlayer].coppered = !betsByCard[cardId][activePlayer].coppered

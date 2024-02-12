@@ -64,8 +64,6 @@
 }
 
 .playing-card {
-    float: right;
-    padding: 1%;
     max-width: var(--card-max-width);
     max-height: var(--card-max-height);
 }
@@ -148,6 +146,12 @@
     max-width: var(--card-max-width);
 }
 
+.small-chip {
+    width: var(--small-chip-width);
+    z-index: 10;
+    position: absolute;
+}
+
 .player-1-color {
     color: var(--player-1-color);
 }
@@ -178,4 +182,12 @@
 
 .player-4-active {
     border: 5px solid var(--player-4-color);
+}
+
+.card-container {
+    width: fit-content;
+    height: fit-content;
+    float: right;
+    margin: 1%;
+    position: relative;
 }
