@@ -10,16 +10,9 @@
     <div id="info-section">
         <button type="button" id="show-hide-settings-btn" onclick="toggleSettings()">Show Settings</button>
         <div id="expandable-settings" hidden>
-            <p id="main-description">Hello World from index.html</p>
-            <span id="color-selection-section">
-                <label id="color-selection-label">Choose a player to change their color: </label>
-                <select id="player-select">
-                    <option value="player-1">P1</option>
-                    <option value="player-2">P2</option>
-                    <option value="player-3">P3</option>
-                    <option value="player-4">P4</option>
-                </select>
-            </span>
+            <p id="main-description">About:</p>
+            <p>"Faro was played alongside its other popular counterpart and played by the masses due to its fast action, easy-to-learn rules, and better odds than most games of chance. From 1825 to 1915, the game was the most popular enticement in almost every gambling hall in the American West." - <a href="https://www.legendsofamerica.com/we-faro/">https://www.legendsofamerica.com/we-faro/</a></p>
+            <p>In this game of Faro, there are 4 players, indicated at the bottom of the screen. Select a player by clicking in this section.<br>The selected player can click on one of the cards on the card table to place a bet on that card. Their chip will appear. They can continue clicking on the card to raise the value of their bet (shown by hovering over their chip). They can remove value or the chip by holding shift while clicking.<br>Once all players have placed the bets they wish to place, click on the deck (indicated by the card back) to draw the winning and losing cards. Automatically, bets on the cards are resolved. If the cards have the same denomination, nothing happens. All players who bet on the winning card will gain double the number of chips they bet in a 1 to 1 return. All players who bet on the losing card will gain nothing. All chips on these cards are erased.<br>In Faro, there are 3 concepts that I have not implememnted yet. The first is coppering. When a bet is coppered, it wins when it matches the losing card and vice versa. The second unimplemented concept is betting on high/low. Players betting on high/low win if the winning card is higher than the losing card and lose otherwise. The third unimplemented concept is the "soap" card. This card is one that was drawn at the beginning of the game and removed from play.<br>All information is obtained from <a href="https://www.legendsofamerica.com/we-faro/">https://www.legendsofamerica.com/we-faro/</a></p>
         </div>
     </div>
 
@@ -75,7 +68,7 @@
             <div id="card-deck-section">
                 <h1 id="high-low-label" class="next-to-card-text">HL</h1>
                 <img src="./images/cards/other/blank_card.svg" class="playing-card" id="high-low-card" alt="high-low-card">
-                <img src="./images/cards/backs/red.svg" class="playing-card" id="card-back" alt="card-deck">
+                <img src="./images/cards/backs/red.svg" class="playing-card" id="card-deck" alt="card-deck">
                 <h1 id="deck-counter" class="next-to-card-text">52</h1>
             </div>
 

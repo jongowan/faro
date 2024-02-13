@@ -45,7 +45,6 @@ const suits = ['spades', 'hearts', 'diamonds', 'clubs']
 const denominations = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace']
 
 const allCards = []
-let availableCards = []
 
 suits.forEach(suit => {
     denominations.forEach(denom => {
@@ -54,10 +53,16 @@ suits.forEach(suit => {
     });
 });
 
-availableCards = Array.from(allCards)
+let availableCards = []
+function resetDeck() {
+    availableCards = Array.from(allCards)
+    document.getElementById('winner-card').setAttribute('src', './images/cards/other/blank_card.svg')
+    document.getElementById('loser-card').setAttribute('src', './images/cards/other/blank_card.svg')
+}
+resetDeck()
 
-function changeDeckCount(newCount) {
-    document.getElementById('deck-counter').innerHTML = newCount
+function updateDeckCount() {
+    document.getElementById('deck-counter').innerHTML = availableCards.length
 }
 
 function getRandomCardIndex() {
@@ -72,6 +77,10 @@ function drawWinnerCard() {
     const cardSrc = './images/cards/fronts/' + card.suit + '_' + card.denom + '.svg'
 
     document.getElementById('winner-card').src = cardSrc
+
+    updateDeckCount()
+
+    return card
 }
 
 function drawLoserCard() {
@@ -82,6 +91,10 @@ function drawLoserCard() {
     const cardSrc = './images/cards/fronts/' + card.suit + '_' + card.denom + '.svg'
 
     document.getElementById('loser-card').src = cardSrc
+
+    updateDeckCount()
+
+    return card
 }
 
 function toggleSettings() {
@@ -197,6 +210,9 @@ function positionSmallChipOnCard(cardId) {
 function betOnCard(cardId) {
     betsByCard[cardId][activePlayer].count += 1
 
+    const scoreElem = document.getElementById(activePlayer + '-score')
+    scoreElem.innerHTML = parseInt(scoreElem.innerText) - 1
+
     let smallChip = document.getElementById('chip-' + cardId + '-' + activePlayer)
     if (!(smallChip)) {
         positionSmallChipOnCard(cardId)
@@ -212,6 +228,9 @@ function decBetOnCard(cardId) {
     if (activeBet.count == 0) {
         return
     }
+
+    const scoreElem = document.getElementById(activePlayer + '-score')
+    scoreElem.innerHTML = parseInt(scoreElem.innerText) + 1
 
     let smallChip = document.getElementById('chip-' + cardId + '-' + activePlayer)
 
@@ -233,8 +252,55 @@ document.addEventListener('click', (event) => {
             }
         }
     }
+
+    if (event.target.id == 'card-deck') {
+        if (availableCards.length < 2) {
+            resetDeck()
+        }
+        else {
+            evalBets({
+                winner: drawWinnerCard(),
+                loser: drawLoserCard()
+            })
+        }
+    }
 })
 
 function toggleCopperBetOnCard(cardId) {
     betsByCard[cardId][activePlayer].coppered = !betsByCard[cardId][activePlayer].coppered
+}
+
+function evalBets(draw) {
+    if (draw.winner.denom == draw.loser.denom) {
+        return
+    }
+
+    const winningBets = betsByCard['card-spades-' + draw.winner.denom]
+    const losingBets = betsByCard['card-spades-' + draw.loser.denom]
+
+    for (const player in winningBets) {
+        console.log(player)
+        console.log(winningBets[player])
+
+        const bet = winningBets[player]
+        winningBets[player] = {count: 0, coppered: false}
+
+        if (bet.count) {
+            document.getElementById('chip-card-spades-' + draw.winner.denom + '-' + player).remove()
+    
+            const scoreElem = document.getElementById(player + '-score')
+            scoreElem.innerHTML = parseInt(scoreElem.innerText) + bet.count * 2
+        }
+    }
+    for (const player in losingBets) {
+        console.log(player)
+        console.log(losingBets[player])
+
+        const bet = losingBets[player]
+        losingBets[player] = {count: 0, coppered: false}
+
+        if (bet.count) {
+            document.getElementById('chip-card-spades-' + draw.loser.denom + '-' + player).remove()
+        }
+    }
 }
